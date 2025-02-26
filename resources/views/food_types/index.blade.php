@@ -1,7 +1,7 @@
 @extends('layouts.dash')
 
 @section('head')
-  <title>Deparment</title>
+  <title></title>
 @endsection
 
 @section('content')

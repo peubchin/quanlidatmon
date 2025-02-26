@@ -43,7 +43,7 @@ return new class extends Migration {
     Schema::create('food_items', function (Blueprint $table) {
       $table->id();
       $table->string('name');
-      $table->string('image');
+      $table->string('image')->nullable();
       $table->foreignId('food_type_id')->constrained('food_types');
       $table->decimal('price', 10, 2);
       $table->text('description')->nullable();

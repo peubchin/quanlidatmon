@@ -21,7 +21,7 @@ class FoodItemFactory extends Factory
             'name' => fake()->unique()->words(2, true),
             'image' => fake()->word(),
             'food_type_id' => FoodType::inRandomOrder()->first()?->id ?? FoodType::factory(),
-            'price' => fake()->randomFloat(0, 10, 200),
+            'price' => fake()->randomFloat(0, 2, 1000) * 1000,
             'description' => fake()->sentence(),
         ];
     }

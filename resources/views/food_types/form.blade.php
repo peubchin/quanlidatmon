@@ -1,7 +1,7 @@
 @extends('layouts.dash')
 
 @section('head')
-  <title>Loại món</title>
+  <title></title>
 @endsection
 
 @section('content')

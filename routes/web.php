@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FoodItemController;
 use App\Http\Controllers\FoodTypeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
@@ -41,6 +42,7 @@ Route::middleware(['auth', 'verified', 'role:staff,admin'])->prefix('manage')->g
     })->name('manage.dashboard');
 
     Route::resource('food-types', FoodTypeController::class);
+    Route::resource('food-items', FoodItemController::class);
 
     Route::get('/department', [DepartmentController::class, 'index'])->name('department.index');
     Route::get('/department/create', [DepartmentController::class, 'create'])->name('department.create');
