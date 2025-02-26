@@ -37,9 +37,11 @@
               </form>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ route('manage.dashboard') }}">Quản lý</a>
-          </li>
+          @if(auth()->user() && in_array(auth()->user()->role, ['admin', 'staff']))
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('manage.dashboard') }}">Quản lý</a>
+            </li>
+          @endif
         @endauth
       </ul>
       <form class="d-flex" role="search">

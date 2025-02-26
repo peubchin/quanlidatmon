@@ -8,12 +8,14 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">
-      Danh sách phòng ban
+      <a href="{{ route('food-types.index') }}">
+        Loại món
+      </a>
     </h1>
     <div>
-      <a href="{{ route('department.create') }}"
+      <a href="{{ route('food-types.create') }}"
         class="btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-download fa-sm text-white-50"></i>
+        <i class="fas fa-upload fa-sm text-white-50"></i>
         Tạo
       </a>
     </div>
@@ -40,21 +42,21 @@
                 </tr>
               </tfoot>
               <tbody>
-                @foreach ($departments as $department)
+                @foreach ($foodTypes as $foodType)
                   <tr>
-                    <td>{{ $department->id }}</td>
-                    <td>{{ $department->name }}</td>
+                    <td>{{ $foodType->id }}</td>
+                    <td>{{ $foodType->name }}</td>
                     <td>
-                      <a href="{{ route('department.edit', $department->id) }}"
-                        class="btn btn-sm btn-primary">Edit</a>
+                      <a href="{{ route('food-types.edit', $foodType) }}"
+                        class="btn btn-sm btn-warning">Sửa</a>
                       <form
-                        action="{{ route('department.destroy', $department->id) }}"
+                        action="{{ route('food-types.destroy', $foodType) }}"
                         method="POST"
                         class="d-inline"
                         >
                         @method('DELETE')
                         @csrf
-                        <button class="btn btn-sm btn-danger">Delete</button>
+                        <button class="btn btn-sm btn-danger">Xóa</button>
                       </form>
                     </td>
                   </tr>
@@ -69,12 +71,12 @@
 @endsection
 
 @section('script')
-  @if (session('err'))
+  @if (session('error'))
     <script>
       Swal.fire({
         icon: 'warning',
         title: 'Lỗi',
-        text: '{{ session('err') }}',
+        text: '{{ session('error') }}',
         confirmButtonColor: '#4e73df',
       })
     </script>

@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.dash')
 
 @section('head')
   <title>Employee</title>

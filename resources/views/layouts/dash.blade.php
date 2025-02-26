@@ -41,9 +41,35 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Dữ liệu
+            </div>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#database"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-database"></i>
+                    <span>DB</span>
+                </a>
+                <div id="database" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('table.index') }}">Table</a>
+                        <a class="collapse-item" href="{{ route('food-types.index') }}">Food type</a>
+                        <a class="collapse-item" href="{{ route('table.index') }}">Table</a>
+                        <a class="collapse-item" href="{{ route('order.index') }}">Order</a>
+                        <a class="collapse-item" href="{{ route('department.index') }}">Department</a>
+                        <a class="collapse-item" href="{{ route('employee.index') }}">Employee</a>
+                        <a class="collapse-item" href="{{ route('customer.index') }}">Customer</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -59,17 +85,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Cơ sở dữ liệu</span>
+                    <span>Components</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/department">Department</a>
-                        <a class="collapse-item" href="{{asset('employee')}}">Employee</a>
-                        <a class="collapse-item" href="{{asset('customer')}}">Customer</a>
-                        <a class="collapse-item" href="{{asset('table')}}">Table</a>
-                        <a class="collapse-item" href="{{asset('order')}}">Order</a>
-                        <a class="collapse-item" href="{{asset('invoice')}}">invoice</a>
-
+                        <h6 class="collapse-header">Custom Components:</h6>
+                        <a class="collapse-item" href="buttons.html">Buttons</a>
+                        <a class="collapse-item" href="cards.html">Cards</a>
                     </div>
                 </div>
             </li>

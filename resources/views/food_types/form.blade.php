@@ -1,7 +1,7 @@
 @extends('layouts.dash')
 
 @section('head')
-  <title>Department</title>
+  <title>Loại món</title>
 @endsection
 
 @section('content')
@@ -15,33 +15,41 @@
       @else
         Xóa
       @endif
-      Phòng Ban
+      loại món
     </h1>
   </div>
   <div class="card">
     <div class="card-body">
 
+      @php
+        $form;
+        switch ($mode) {
+          case 'update':
+            $form = [
+              'action' => route('food-types.update', $foodType),
+              'method' => 'PATCH',
+            ];
+            break;
+          default:
+            $form = [
+              'action' => route('food-types.store'),
+              'method' => 'POST',
+            ];
+            break;
+        }
+      @endphp
       <!-- Form chỉnh sửa -->
-      @if ($mode == 'create')
-        <form action="{{ route('department.store') }}" method="POST">
-      @elseif ($mode == 'update')
-        <form action="{{ route('department.update', $department->id) }}"
-          method="POST">
-        @method('PUT')
-      @else
-        <form action="{{ route('department.destroy', $department->id) }}"
-          method="POST">
-        @method('DELETE')
-      @endif
+      <form action="{{ $form['action'] }}" method="POST">
+      @method($form['method'])
       @csrf
       <div class="mb-3">
         <label for="name" class="form-label">
-          Tên Phòng Ban
+          Tên loại món
         </label>
         <input type="text" name="name" id="name"
           class="form-control @error('name') is-invalid @enderror"
-          @isset($department)
-            value="{{ old('name', $department->name) }}"
+          @isset($foodType)
+            value="{{ old('name', $foodType->name) }}"
           @endisset
           value="{{ old('name') }}">
         @error('name')
@@ -53,7 +61,7 @@
 
       <!-- Nút hành động -->
       <button type="submit" class="btn btn-primary">Ok</button>
-      <a href="{{ route('department.index') }}" class="btn btn-secondary">
+      <a href="{{ route('food-types.index') }}" class="btn btn-secondary">
         Quay lại
       </a>
       </form>
