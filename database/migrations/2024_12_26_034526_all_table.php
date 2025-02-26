@@ -35,26 +35,26 @@ return new class extends Migration {
       $table->integer('seats')->default(4);
       $table->timestamps();
     });
-    Schema::create('orders', function (Blueprint $table) {
-      $table->id();
-      $table->foreignId('customer_id')->constrained('customers');
-      $table->foreignId('table_id')->constrained('tables');
-      $table->foreignId('employee_id')->constrained('employees');
-      $table->boolean('paid')->default(false);
-      $table->decimal('discount')->default(0);
-      $table->timestamps();
-    });
     Schema::create('food_types', function (Blueprint $table) {
       $table->id();
-      $table->string('name');
+      $table->string('name')->unique();
       $table->timestamps();
     });
     Schema::create('food_items', function (Blueprint $table) {
       $table->id();
       $table->string('name');
+      $table->string('image');
       $table->foreignId('food_type_id')->constrained('food_types');
       $table->decimal('price', 10, 2);
       $table->text('description')->nullable();
+      $table->timestamps();
+    });
+    Schema::create('orders', function (Blueprint $table) {
+      $table->id();
+      $table->foreignId('user_id')->constrained('users');
+      $table->foreignId('table_id')->constrained('tables');
+      $table->boolean('paid')->default(false);
+      $table->decimal('discount')->default(0);
       $table->timestamps();
     });
     Schema::create('order_details', function (Blueprint $table) {

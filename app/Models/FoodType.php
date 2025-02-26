@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class FoodType extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'table_id'];
+
+    protected $fillable = ['name'];
 }
