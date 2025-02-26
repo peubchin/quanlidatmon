@@ -61,10 +61,10 @@
                 </a>
                 <div id="database" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('table.index') }}">Table</a>
+                        <a class="collapse-item" href="{{ route('tables.index') }}">Table</a>
                         <a class="collapse-item" href="{{ route('food-types.index') }}">Food type</a>
                         <a class="collapse-item" href="{{ route('food-items.index') }}">Food item</a>
-                        <a class="collapse-item" href="{{ route('order.index') }}">Order</a>
+                        <a class="collapse-item" href="{{ route('orders.index') }}">Order</a>
                         <a class="collapse-item" href="{{ route('department.index') }}">Department</a>
                         <a class="collapse-item" href="{{ route('employee.index') }}">Employee</a>
                         <a class="collapse-item" href="{{ route('customer.index') }}">Customer</a>
