@@ -12,12 +12,12 @@
     <header class="bg-dark text-white text-center py-5">
         <h1>Welcome to Our Restaurant</h1>
         <p class="lead">Delicious meals crafted with love</p>
-        <a href="/ordertable" class="btn btn-warning mt-3">Tiến hành đặt món</a>
+        <a href="/" class="btn btn-warning mt-3">View Menu</a>
     </header>
 
     <!-- Menu Section -->
     <section id="menu" class="container py-5">
-        <h2 class="text-center mb-4">Special Dishes</h2>
+        <h2 class="text-center mb-4">Our Menu</h2>
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
