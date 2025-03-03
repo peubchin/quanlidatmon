@@ -9,7 +9,9 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TableController;
-use App\Models\FoodItem;
+// use App\Models\FoodItem;
+use App\Http\Controllers\HomeController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,12 +25,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $foodItems=FoodItem::all();
-    return view('home',[
-        'foodItems' => $foodItems
-    ]);
-})->name('home');
+// Route::get('/', function () {
+//     $foodItems=FoodItem::all();
+//     return view('home',[
+//         'foodItems' => $foodItems
+//     ]);
+// })->name('home');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
