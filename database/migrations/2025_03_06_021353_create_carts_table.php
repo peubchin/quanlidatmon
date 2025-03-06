@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('food_item_id')->constrained('food_items')->onDelete('cascade');
             $table->bigInteger('price');
             $table->integer('quantity');
-            
+            $table->bigInteger('shipping_fee')->default(0);
             $table->timestamps();
         });
     }

@@ -30,13 +30,13 @@
   @include('components.navbar')
 
   <div class="container mb-5">
-    <h2 class="text-center m-3">Giỏ Hàng</h2>
+      <h2 class="text-center m-3">Giỏ Hàng</h2>
+      @if ($cart->isEmpty())
+          <p>Giỏ hàng của bạn đang trống.</p>
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    @if ($cart->isEmpty())
-        <p>Giỏ hàng của bạn đang trống.</p>
     @else
         <table class="table">
             <thead>
