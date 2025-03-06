@@ -13,7 +13,9 @@ class Order extends Model
         'user_id',
         'table_id',
         'discount',
-        'paid',
+        // 'paid',
+        'status',
+        'created_at',
     ];
 
     public function user()

@@ -3,13 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\FoodType;
+use App\Models\OrderDetail;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Http\Request;
 use App\Models\FoodItem;
 
 
-class HomeController extends Controller {
-    public function index() {
-        $foodItems = FoodItem::all();
+class HomeController extends Controller
+{
+    public function index()
+    {
+        // Get the first and last day of the previous month
+        $startDate = Carbon::now()->subMonth()->startOfMonth();
+        $endDate = Carbon::now()->subMonth()->endOfMonth();
+
+        // Get the ID of 'Đồ uống' from the food_types table
+        $drinkType = FoodType::where('name', 'Đồ uống')->first();
+
+        $topSellersQuery = OrderDetail::select('food_item_id', DB::raw('SUM(quantity) as total_sold'))
+            ->whereBetween('created_at', [$startDate, $endDate]) // Filter for last month
+            ->whereHas('foodItem', function ($query) use ($drinkType) {
+                if ($drinkType) {
+                    $query->where('food_type_id', '!=', $drinkType->id);
+                }
+            })
+            ->groupBy('food_item_id')
+            ->orderByDesc('total_sold')
+            ->limit(8)
+            ->get();
+
+        // Fetch food item details
+        $foodItems = FoodItem::whereIn('id', $topSellersQuery->pluck('food_item_id'))->get()->keyBy('id');
 
         $slogans = [
             [
@@ -32,7 +57,8 @@ class HomeController extends Controller {
         return view('home', compact('foodItems', 'slogans')); // Truyền biến $slides vào view
     }
 
-    public function menu(Request $request) {
+    public function menu(Request $request)
+    {
 
         // Lấy danh sách loại món ăn
         $foodTypes = FoodType::all();

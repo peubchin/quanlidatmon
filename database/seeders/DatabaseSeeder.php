@@ -17,9 +17,10 @@ class DatabaseSeeder extends Seeder
     $this->call([
       UserSeeder::class,
       TableSeeder::class,
-      FoodTypeSeeder::class,
+      IngredientSeeder::class,
       FoodItemSeeder::class,
       OrderSeeder::class,
+      CartSeeder::class,
     ]);
 
     // // Seed Departments
@@ -77,20 +78,6 @@ class DatabaseSeeder extends Seeder
     //     'email' => $customer[1],
     //     'phone' => $customer[2]
     //   ]]);
-    // }
-
-    // // Seed Orders
-    // for ($i = 1; $i <= 10; $i++) {
-    //   DB::table('orders')->insert([
-    //     ['customer_id' => rand(1, 10), 'table_id' => rand(1, 10), 'paid' => (bool) rand(0, 1), 'discount' => rand(0, 20)],
-    //   ]);
-    // }
-
-    // // Seed Order Details
-    // for ($i = 1; $i <= 10; $i++) {
-    //   DB::table('order_details')->insert([
-    //     ['order_id' => rand(1, 10), 'food_item_id' => rand(1, 10), 'quantity' => rand(1, 5), 'price' => rand(5, 50), 'status' => 'cooking'],
-    //   ]);
     // }
   }
 }

@@ -5,8 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đặt món</title>
+    <link rel="stylesheet" href="{{ asset('css/nunito.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
 </head>
+<style>
+    a {
+        text-decoration: none;
+        margin: 0 5px;
+    }
+
+    button:hover {
+        background: pink;
+        color: black;
+    }
+
+    * {
+        transition: 0.5s;
+    }
+
+    .col-lg-3>.card:hover {
+        translate: 0 -0.6em;
+        filter: none;
+        box-shadow: 0 0 1em gray;
+    }
+</style>
 
 <body>
     @include('components.navbar')
@@ -67,12 +90,15 @@
     </section>
 
     <!-- About Section -->
-    <section class="bg-light py-5">
+    <section class="py-5" style="background-image: url('{{ asset('img/spaces/space3.jpg') }}');
+           background-position:center;
+           background-size:cover;
+           color:white;">
         <div class="container">
-            <h2 class="text-center">About Us</h2>
+            <h2 class="text-center">ABOUT US</h2>
             <div class="row">
                 <div class="col-md-6">
-                    <h3>TEAM</h3>
+                    <h3>Team</h3>
                     <ul>
                         <li><strong>Đầu bếp</strong>: Huỳnh Chí Hào</li>
                         <li><strong>Phục vụ</strong>:
@@ -82,8 +108,8 @@
                         <li><strong>Thu ngân</strong>: Nguyễn Thị Mỹ Hiền</li>
                     </ul>
                 </div>
-                <div class="col-lg-6">
-                    <h3>DELIMA RESTAURANT</h3>
+                <div class="col-md-6">
+                    <h3>Delima Restaurant</h3>
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim aperiam repellat accusantium
                         mollitia, aspernatur impedit nam, sunt hic dolore amet consequuntur qui aliquam tempora delectus
                         alias fuga possimus doloribus nisi?</p>
@@ -121,7 +147,7 @@
 
     <!-- Footer -->
     <footer class="bg-black text-white text-center py-3">
-        <p>&copy; 2025 Restaurant Name. All Rights Reserved.</p>
+        <p>&copy; 2025 DELIMA. All Rights Reserved.</p>
     </footer>
 
 </body>

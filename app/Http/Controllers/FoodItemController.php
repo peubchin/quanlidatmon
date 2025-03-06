@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FoodItem;
 use App\Models\FoodType;
+use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use Storage;
 
@@ -12,9 +13,23 @@ class FoodItemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $foodItems = FoodItem::with('foodType')->get();
+        $query = FoodItem::with('foodType');
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%$search%");
+        }
+
+        $sortBy = $request->input('sort_by', 'created_at');
+        $sortOrder = $request->input('sort_order', 'desc');
+        
+        if (in_array($sortBy, ['created_at', 'price'])) {
+            $query->orderBy($sortBy, $sortOrder);
+        }
+    
+        $foodItems = $query->paginate(10)->withQueryString();
+
         return view('food_items.index', compact('foodItems'));
     }
 
@@ -43,7 +58,7 @@ class FoodItemController extends Controller
 
         $imagePath = '';
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('food_images', 'public');
+            $imagePath = $request->file('image')->store('food_items', 'public');
         }
 
         FoodItem::create([
@@ -60,9 +75,11 @@ class FoodItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(FoodItem $foodItem)
     {
-        //
+        $foodTypes = FoodType::get();
+        $ingredients = Ingredient::all();
+        return view('food_items.show', compact('foodItem', 'foodTypes', 'ingredients'));
     }
 
     /**
@@ -90,7 +107,7 @@ class FoodItemController extends Controller
 
         if ($request->hasFile('image')) {
             Storage::disk('public')->delete($foodItem->image);
-            $imagePath = $request->file('image')->store('food_images', 'public');
+            $imagePath = $request->file('image')->store('food_items', 'public');
         } else {
             $imagePath = $foodItem->image;
         }

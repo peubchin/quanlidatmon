@@ -33,7 +33,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Delima <sup>2</sup></div>
             </a>
 
             <!-- Divider -->
@@ -41,9 +41,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('statistics.index') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Statistics</span></a>
             </li>
 
             <!-- Divider -->
@@ -64,6 +64,8 @@
                         <a class="collapse-item" href="{{ route('tables.index') }}">Table</a>
                         <a class="collapse-item" href="{{ route('food-types.index') }}">Food type</a>
                         <a class="collapse-item" href="{{ route('food-items.index') }}">Food item</a>
+                        <a class="collapse-item" href="{{ route('ingredients.index') }}">Ingredient</a>
+                        <a class="collapse-item" href="{{ route('food_ingredients.index') }}">Food ingredient</a>
                         <a class="collapse-item" href="{{ route('orders.index') }}">Order</a>
                         <a class="collapse-item" href="{{ route('department.index') }}">Department</a>
                         <a class="collapse-item" href="{{ route('employee.index') }}">Employee</a>
@@ -191,10 +193,13 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form action=""
+                        class="d-none1 d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        @foreach(request()->except('search') as $key => $value)
+                            <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                        @endforeach
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            <input type="text" name="search" class="form-control bg-light border-0 small" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
@@ -208,7 +213,7 @@
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
+                        <li class="nav-item dropdown no-arrow d-none d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
@@ -216,9 +221,11 @@
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
+                                <form action=""
+                                    class="form-inline mr-auto w-100 navbar-search"
+                                    >
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
+                                        <input type="text" name="search" class="form-control bg-light border-0 small"
                                             placeholder="Search for..." aria-label="Search"
                                             aria-describedby="basic-addon2">
                                         <div class="input-group-append">
