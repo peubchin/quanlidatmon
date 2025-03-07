@@ -10,20 +10,20 @@
   <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
 </head>
 <style>
-    button:hover {
-        background: pink;
-        color: black;
-    }
+  button:hover {
+    background: pink;
+    color: black;
+  }
 
-    * {
-        transition: 0.5s;
-    }
+  * {
+    transition: 0.5s;
+  }
 
-    .col-md-3>.card:hover {
-        translate: 0 -0.6em;
-        filter: none;
-        box-shadow: 0 0 1em gray;
-    }
+  .col-md-3>.card:hover {
+    translate: 0 -0.6em;
+    filter: none;
+    box-shadow: 0 0 1em gray;
+  }
 </style>
 
 <body>
@@ -36,11 +36,11 @@
     <div class="mb-4 d-flex justify-content-between">
       <a href="{{ route('menu') }}" class="btn btn-secondary">Tất cả</a>
       @foreach($foodTypes as $type)
-        <a href="{{ route('menu', ['food_type' => $type->id]) }}" 
-           class="btn {{ request('food_type') == $type->id ? 'btn-success' : 'btn-primary' }}">
-          {{ $type->name }}
-        </a>
-      @endforeach
+      <a href="{{ route('menu', ['food_type' => $type->id]) }}"
+      class="btn {{ request('food_type') == $type->id ? 'btn-success' : 'btn-primary' }}">
+      {{ $type->name }}
+      </a>
+    @endforeach
     </div>
 
     <!-- Dropdown sắp xếp giá -->
@@ -54,26 +54,26 @@
     </form>
 
     <div class="row my-3">
-  @forelse($foodItems as $food)
-    <div class="col-md-3">
+      @forelse($foodItems as $food)
+      <div class="col-md-3">
       <div class="card mb-4">
         <img src="{{ asset('storage/' . $food->image) }}" class="card-img-top" alt="{{ $food->name }}">
         <div class="card-body">
-          <h5 class="card-title">{{ $food->name }}</h5>
-          <p class="card-text">{{ $food->foodType->name }}</p>
-          <p class="card-text">Giá: {{ number_format($food->price) }} VNĐ</p>
-          <!-- Nút thêm vào giỏ hàng -->
-          <form action="{{ route('cart.add', $food->id) }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-success w-100">🛒 Thêm vào giỏ hàng</button>
-          </form>
+        <h5 class="card-title">{{ $food->name }}</h5>
+        <p class="card-text">{{ $food->foodType->name }}</p>
+        <p class="card-text">Giá: {{ number_format($food->price) }} VNĐ</p>
+        <!-- Nút thêm vào giỏ hàng -->
+        <form action="{{ route('cart.add', $food->id) }}" method="POST" class="add-to-cart-form">
+          @csrf
+          <button type="submit" class="btn btn-success w-100">🛒 Thêm vào giỏ hàng</button>
+        </form>
         </div>
       </div>
+      </div>
+    @empty
+      <p class="text-center">Không tìm thấy món ăn nào!</p>
+    @endforelse
     </div>
-  @empty
-    <p class="text-center">Không tìm thấy món ăn nào!</p>
-  @endforelse
-</div>
 
   </section>
 
@@ -93,15 +93,50 @@
 
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
-@if (session('error'))
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- @if (session('error'))
   <script>
     Swal.fire({
-      icon: 'warning',
-      title: 'Lỗi',
-      text: '{{ session('error') }}',
-      confirmButtonColor: '#4e73df',
+    icon: 'warning',
+    title: 'Lỗi',
+    text: '{{ session('error') }}',
+    confirmButtonColor: '#4e73df',
     })
+  </script> -->
+  <script>
+$(document).ready(function() {
+    $(".add-to-cart-form").submit(function(e) {
+        e.preventDefault(); // Ngăn form gửi request theo cách bình thường
+
+        var form = $(this);
+        var url = form.attr("action");
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // Gửi dữ liệu form
+            success: function(response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Đã thêm vào giỏ hàng!',
+                    text: 'Món ăn đã được thêm thành công.',
+                    confirmButtonColor: '#4e73df'
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: 'Có lỗi xảy ra khi thêm vào giỏ hàng.',
+                    confirmButtonColor: '#dc3545'
+                });
+            }
+        });
+    });
+});
   </script>
+
 @endif
 
 </html>

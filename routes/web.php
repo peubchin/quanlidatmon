@@ -88,8 +88,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-    Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+    Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
     Route::post('/checkout', [CartController::class, 'processCheckout'])->name('cart.processCheckout');
 
 });
