@@ -25,13 +25,13 @@ class HomeController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate]) // Filter for last month
             ->whereHas('foodItem', function ($query) use ($drinkType) {
                 if ($drinkType) {
-                    $query->where('food_type_id', '!=', $drinkType->id);
+                    $query->where('food_type_id', '!=', $drinkType->id);//lọc và show các món bán chạy nhất, trừ đồ uống
                 }
             })
-            ->groupBy('food_item_id')
-            ->orderByDesc('total_sold')
-            ->limit(8)
-            ->get();
+            ->groupBy('food_item_id')//gom nhóm theo từng món riêng biệt
+            ->orderByDesc('total_sold')//sắp xếp số lượng bán giảm dần
+            ->limit(8)//lấy 8 món nhiều nhất
+            ->get();//lấy dữ liệu từ database
 
         // Fetch food item details
         $foodItems = FoodItem::whereIn('id', $topSellersQuery->pluck('food_item_id'))->get()->keyBy('id');

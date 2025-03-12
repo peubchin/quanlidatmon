@@ -118,6 +118,7 @@
             @endforeach
         </div>
     </section>
+
     <!-- About Section -->
     <section class="py-5" 
             style="background-image: url('{{ asset('img/spaces/space3.jpg') }}');

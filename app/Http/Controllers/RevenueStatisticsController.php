@@ -68,12 +68,12 @@ class RevenueStatisticsController extends Controller
         $monthlyRevenue = $this->getRevenueQuery($startOfMonth, $endOfMonth, $foodItemId)
             ->select(
                 DB::raw('(1 + FLOOR((DAY(orders.created_at) - 1) / 7)) as week_number'),
-                DB::raw('SUM(order_details.price * order_details.quantity) as total_revenue')
+                DB::raw('SUM(order_details.price * order_details.quantity) as total_revenue'),
             )
             ->groupBy('week_number')
             ->get();
 
-        $weekCount = $endOfMonth->weekOfYear - $startOfMonth->weekOfYear + 1;
+        $weekCount = ceil($startOfMonth->daysInMonth / 7);
         $labels = [];
         $data = [];
 
@@ -118,7 +118,7 @@ class RevenueStatisticsController extends Controller
     {
         return
             DB::table('orders')
-                ->where('orders.status', 'đã thanh toán')
+                ->where('paid', true)
                 ->whereBetween('orders.created_at', [$startDate, $endDate])
                 ->joinSub(
                     DB::table('order_details')

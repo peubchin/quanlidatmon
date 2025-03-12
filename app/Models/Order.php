@@ -13,8 +13,8 @@ class Order extends Model
         'user_id',
         'table_id',
         'discount',
-        // 'paid',
-        'status',
+        'paid',
+        // 'status',
         'created_at',
     ];
 
@@ -38,5 +38,9 @@ class Order extends Model
         return $this->orderDetails()
             // ->where('status', '!=', 'chuẩn bị')
             ->sum(\DB::raw('quantity * price'));
+    }
+    public function details()
+    {
+        return $this->hasMany(OrderDetail::class, 'order_id', 'id');
     }
 }

@@ -38,7 +38,7 @@
     <section class="container py-5 px-3">
         <h1 class="text-center mt-5 text-dark" style="font-family:'Dancing Script',cursive;">Menu</h1>
         <!-- Tabs Phân Loại Món Ăn -->
-         <div class=" bg-dark p-1 rounded-1 bg-opacity-50">
+         <div class=" bg-dark p-2 bg-opacity-50">
         <ul class="nav nav-tabs mb-4" id="foodTabs">
             <li class="nav-item">
                 <button class="nav-link active" data-food-type="all">Tất cả</button>
@@ -53,7 +53,9 @@
 
         <!-- Dropdown sắp xếp giá -->
         <form method="GET" action="{{ route('menu') }}">
+            <!-- type hidden giúp gửi dữ liệu ng dùng k thấy -->
             <input type="hidden" name="food_type" value="{{ request('food_type') }}">
+            <!-- Khi nhấn 1 tùy chọn, gửi lên server với tên sort -->
             <select name="sort" onchange="this.form.submit()" class="form-select w-auto">
                 <option value="" disabled selected>Sắp xếp theo giá</option>
                 <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Giá tăng dần</option>
@@ -161,7 +163,7 @@
                 error: function (xhr) {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Lỗi!',
+                        title: 'Vui lòng đăng nhập!',
                         text: 'Có lỗi xảy ra khi thêm vào giỏ hàng.',
                         confirmButtonColor: '#dc3545'
                     });

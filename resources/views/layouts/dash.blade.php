@@ -67,9 +67,10 @@
                         <a class="collapse-item" href="{{ route('ingredients.index') }}">Ingredient</a>
                         <a class="collapse-item" href="{{ route('food_ingredients.index') }}">Food ingredient</a>
                         <a class="collapse-item" href="{{ route('orders.index') }}">Order</a>
-                        <a class="collapse-item" href="{{ route('department.index') }}">Department</a>
-                        <a class="collapse-item" href="{{ route('employee.index') }}">Employee</a>
-                        <a class="collapse-item" href="{{ route('customer.index') }}">Customer</a>
+                        {{-- <a class="collapse-item" href="{{ route('department.index') }}">Department</a> --}}
+                        <a class="collapse-item" href="{{ route('employees.index') }}">Employee</a>
+                        <a class="collapse-item" href="{{ route('customers.index') }}">Customer</a>
+                        <a class="collapse-item" href="{{ route('online_orders.index') }}">Online_orders</a>
                     </div>
                 </div>
             </li>
@@ -202,7 +203,7 @@
                             <input type="text" name="search" class="form-control bg-light border-0 small" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
@@ -368,7 +369,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -381,10 +382,13 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                                    @csrf
+                                    <button class="dropdown-item">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
-                                </a>
+                                    </button>
+                                </form>
                             </div>
                         </li>
 

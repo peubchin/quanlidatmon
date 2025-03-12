@@ -13,88 +13,156 @@
   @include('components.navbar')
 
   <section class="container py-5">
-    <h1 class="text-center">Xác nhận thanh toán</h1>
+    <h1 class="text-center">Xác nhận đặt Món</h1>
 
     @if ($cart->isEmpty())
-    <p class="text-center">Giỏ hàng của bạn đang trống.</p>
-    <a href="{{ route('menu') }}" class="btn btn-primary d-block mx-auto w-50">Quay lại thực đơn</a>
+      <p class="text-center">Giỏ hàng của bạn đang trống.</p>
+      <a href="{{ route('menu') }}" class="btn btn-primary d-block mx-auto w-50">Quay lại thực đơn</a>
     @else
-    <table class="table table-bordered mt-4">
-      <thead class="table-dark">
-      <tr>
-        <th>Món ăn</th>
-        <th>Giá</th>
-        <th>Số lượng</th>
-        <th>Tổng</th>
-      </tr>
-      </thead>
-      <tbody>
-      @foreach ($cart as $item)
-      <tr>
-        <td>{{ $item->foodItem->name }}</td>
-        <td>{{ number_format($item->price) }} VNĐ</td>
-        <td>{{ $item->quantity }}</td>
-        <td>{{ number_format($item->price * $item->quantity) }} VNĐ</td>
-      </tr>
-      @endforeach
-      </tbody>
-    </table>
+      <table class="table table-bordered mt-4">
+        <thead class="table-dark">
+        <tr>
+          <th>Món ăn</th>
+          <th>Giá</th>
+          <th>Số lượng</th>
+          <th>Tổng</th>
+        </tr>
+        </thead>
+        <tbody>
+          @foreach ($cart as $item)
+            <tr>
+              <td>{{ $item->foodItem->name }}</td>
+              <td>{{ number_format($item->price) }} VNĐ</td>
+              <td>{{ $item->quantity }}</td>
+              <td>{{ number_format($item->price * $item->quantity) }} VNĐ</td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
 
-    <h3 class="text-end">Tổng tiền: <strong class="text-danger" id="cart_total">{{ number_format($total) }} VNĐ</strong></h3>
-
-    <!-- Form nhập thông tin -->
-    <form action="{{ route('cart.processCheckout') }}" method="POST" class="mt-4">
-      @csrf
-      <div class="mb-3">
-        <label for="name" class="form-label">Họ và tên</label>
-        <input type="text" class="form-control" id="name" name="name" required>
-      </div>
-      <div class="mb-3">
-        <label for="phone" class="form-label">Số điện thoại</label>
-        <input type="tel" class="form-control" id="phone" name="phone" required>
-      </div>
-      <div class="mb-3">
-        <label for="address" class="form-label">Địa chỉ giao hàng</label>
-        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Phí vận chuyển</label>
-        <input type="text" class="form-control text-primary" id="shipping_fee" name="shipping_fee" readonly value="Tính khi nhập địa chỉ">
-      </div>
-      <!-- Chọn phương thức thanh toán -->
-      <div class="mb-3">
-        <label for="payment_method" class="form-label">Phương thức thanh toán</label>
-        <select class="form-select" id="payment_method" name="payment_method" required>
-          <option value="cod">Thanh toán khi nhận hàng (COD)</option>
-          <option value="bank_transfer">Chuyển khoản ngân hàng</option>
-          <option value="momo">Thanh toán qua MoMo</option>
-          <option value="credit_card">Thẻ tín dụng/Ghi nợ</option>
-        </select>
-      </div>
-      <div class="mb-3 d-flex align-items-center">
-        <h4><strong>Tổng tiền (bao gồm phí ship): <span id="total_price">{{ number_format($total) }} VNĐ</span></strong></h4>
-      </div>
-      <button type="submit" class="btn btn-success ms-auto"> Thanh toán ngay</button>
+      <h3 class="text-end">Tổng tiền: <strong class="text-danger">{{ number_format($total) }} VNĐ</strong></h3>
+      <form action="{{ route('cart.processCheckout') }}" method="POST">
+        @csrf
+        <label>Họ và Tên:</label>
+        <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}" required>
+    
+        <label>Số điện thoại:</label>
+        <input type="text" name="phone" class="form-control" value="{{ auth()->user()->phone }}" required>
+    
+        <label>Địa chỉ:</label>
+        <textarea name="address" class="form-control" required>{{ auth()->user()->address }}</textarea>
+    
+        <button type="submit" class="btn btn-success mt-3">Đặt món ngay</button>
     </form>
-    @endif
+    
+            @endif
+        </section>
+        <section class="container mt-5">
+            <h2>Đơn hàng của tôi</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Mã ĐH</th>
+                        <th>Người đặt</th>
+                        <th>SĐT</th>
+                        <th>Địa chỉ</th>
+                        <th>Trạng thái</th>
+                        <th>Lý do</th>
+                        <th>Ngày tạo</th>
+                        <th>Thanh toán</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($orders as $order)
+                        <tr>
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->user->name }}</td>
+                            <td>{{ $order->phone }}</td>
+                            <td>{{ $order->address }}</td>
+                            <td>{{ $order->status }}</td>
+                            <td>{{ $order->status == 'không nhận' ? $order->li_do : '-' }}</td>
+                            <td>{{ $order->created_at }}</td>
+                            <td>{{ $order->da_thanh_toan?'Đã thanh toán':'Chưa thanh toán' }}</td>
+                            <td>
+                                <form action="{{ route('online_orders.cancel', $order->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Hủy</button>
+                                </form>
+                                <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#orderModal{{ $order->id }}">Xem</button>
+                                <button   data-bs-toggle="modal" data-bs-target="#paymentModal" onclick="showPaymentModal({{ $order->id }}, {{ $order->items->sum(fn($i) => $i->price * $i->quantity) }})" class="btn btn-secondary btn-sm" style="display:  {{ $order->da_thanh_toan ? 'none' :'inline' }};" >{{ $order->da_thanh_toan ? ' ' :'Thanh toán'}}</button>
+                            </td>
+                        </tr>
+    
+                        <!-- Modal hiển thị chi tiết đơn hàng -->
+                        <div class="modal fade" id="orderModal{{ $order->id }}" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Chi tiết đơn hàng #{{ $order->id }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul>
+                                            @foreach ($order->items as $item)
+                                                <li>{{ $item->food->name }} - {{ number_format($item->price) }} VNĐ x {{ $item->quantity }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <p><strong>Tổng tiền: </strong>{{ number_format($order->items->sum(fn($i) => $i->price * $i->quantity)) }} VNĐ</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Payment Modal -->
+      <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="paymentModalLabel">Thanh toán</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="modal-body text-center">
+          <p>Quét mã QR để thanh toán:</p>
+          <p id="sotienthanhtoan"></p>
+          <img id="qrCode" src="" alt="QR Code" class="img-fluid">
+          </div>
+          <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+        </div>
+      </div>
+                    @endforeach
+                </tbody>
+            </table>
+              
   </section>
-
+  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
   <script>
-    document.getElementById('address').addEventListener('input', function () {
-      let address = this.value;
-      let shippingFee = 30000; // Mặc định ship tỉnh khác
+    function showPaymentModal(orderId, price) {
+      // Định dạng số tiền bằng toLocaleString
+      let formattedPrice = price.toLocaleString('vi-VN') + '₫';
 
-      if (address.includes('Hồ Chí Minh')) {
-        shippingFee = 15000;
-      } else if (address.includes('Hà Nội')) {
-        shippingFee = 20000;
-      }
+      // Cấu hình thông tin ngân hàng
+      const bankInfo = {
+        bankId: "970416",         // Mã ngân hàng ACB
+        accountNo: "38752307",   // Số tài khoản của bạn
+        accountName: "TRAN MINH QUOC THAI", // Tên tài khoản của bạn
+        amount: price,
+        content: `Thanh toan don hang ${orderId}` // Nội dung chuyển khoản
+      };
 
-      let cartTotal = parseInt("{{ $total }}");
-      let total = cartTotal + shippingFee;
-      document.getElementById('shipping_fee').value = shippingFee.toLocaleString('vi-VN') + ' VNĐ';
-      document.getElementById('total_price').innerText = total.toLocaleString('vi-VN') + ' VNĐ';
-    });
+      // Tạo link ảnh QR dựa trên API VietQR
+      const qrData = `https://api.vietqr.io/image/${bankInfo.bankId}-${bankInfo.accountNo}-compact.jpg?amount=${bankInfo.amount}&addInfo=${bankInfo.content}&accountName=${bankInfo.accountName}`;
+
+      // Cập nhật giao diện modal
+      document.getElementById('qrCode').src = qrData;
+      document.getElementById('sotienthanhtoan').innerHTML = `Số tiền cần thanh toán: <b>${formattedPrice}</b>`;
+
+    }
   </script>
 </body>
 </html>
