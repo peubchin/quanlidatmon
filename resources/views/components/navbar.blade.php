@@ -1,5 +1,8 @@
-<nav class="navbar navbar-expand-lg px-2 rounded-bottom-5 {{ request()->is('/') ? 'navbar-dark' : 'navbar-light' }}" 
-    style="{{ request()->is('/') ? 'background-color: rgba(0, 0, 0, 0.5); position: fixed; width: 100%; z-index: 1000; transition: background-color 0.5s;' : 'background-color: white;' }}">
+<nav class="navbar navbar-expand-lg px-2 rounded-bottom-5 
+            {{ request()->is('/') || request()->is('menu') ? 'navbar-dark' : 'navbar-light' }}" 
+    style="background-color: {{ request()->is('/') || request()->is('menu') ? 'rgba(0, 0, 0, 0.5)' : 'white' }};
+           {{ request()->is('/') || request()->is('menu') ? 'position: fixed;' : 'position: relative;' }} 
+           width: 100%; z-index: 1000; transition: background-color 0.5s;">
     <div class="container-fluid p-0 m-0">
       <a class="navbar-brand" href="/">
         <img src="{{ asset('/img/logo.png') }}" alt="" srcset="" width="50px">
@@ -46,7 +49,7 @@
       @endauth
         </ul>
         <!-- Giỏ hàng -->
-        <a href="{{ route('cart.index') }}" class="me-3">
+        <a href="{{ route('cart.index') }}" class="me-3 text-decoration-none">
           <div class="rounded-circle bg-body-secondary d-flex justify-content-center align-items-center"
             style="width: 50px;height:50px;">
             <i class="fas fa-shopping-cart fa-2xl"></i>

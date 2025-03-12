@@ -45,7 +45,7 @@
                     <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100">
                         <h1 class="text-center">Welcome to Our Restaurant</h1>
                         <p class="lead text-center">Trải nghiệm không gian ấm cúng <br> Hương vị khó quên!</p>
-                        <a href="/" class="btn btn-outline-light mt-3">Đặt bàn ngay</a>
+                        <a href="/menu" class="btn btn-outline-light mt-3">Đặt món ngay</a>
                     </div>
                 </div>
                 @foreach ($slogans as $slogan)
@@ -96,6 +96,9 @@
         </div>
     </section>
     </div>
+    <section>
+        <img src="{{asset('img/spaces/space4.jpg')}}" height="300px" width="100%" style="object-fit:cover;" alt="">
+    </section>
 
     <!-- Menu Section -->
     <section id="menu" class="container py-5">
@@ -116,7 +119,8 @@
         </div>
     </section>
     <!-- About Section -->
-    <section class="py-5" style="background-image: url('{{ asset('img/spaces/space3.jpg') }}');
+    <section class="py-5" 
+            style="background-image: url('{{ asset('img/spaces/space3.jpg') }}');
            background-position:center;
            background-size:cover;
            color:white;">
